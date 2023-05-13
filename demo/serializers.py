@@ -9,6 +9,7 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'title', 'description', 'price', 'published']
+        # read_only_fields = ['price']
 
 
 class CommentSerializer(serializers.Serializer):
