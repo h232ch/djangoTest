@@ -13,7 +13,7 @@ from .models import Book, Album, Track
 from django.shortcuts import render
 from rest_framework import viewsets, status, mixins
 from rest_framework import generics
-from .serializers import BookSerializer, AlbumSerializer, TrackSerializer
+from .serializers import BookSerializer, AlbumSerializer, TrackSerializer, BookMiniSerializer
 
 
 # def first(request):
@@ -155,11 +155,26 @@ def first(request):
 
 # we need to study ViewSet more
 class BookViewSet(viewsets.ModelViewSet):
-    serializer_class = BookSerializer
+    # serializer_class = BookSerializer
+
+    # Change the Book Serializer to Book Mini Serializer
+    serializer_class = BookMiniSerializer
     queryset = Book.objects.all()
     authentication_classes = (TokenAuthentication,)
     # settings.py에 먼저 정의하더라도 아래 권한이 먼저 적용됨
     # permission_classes = (IsAuthenticated,)
+
+    # You can fix the functions viewset already has
+    # You can fix the retrieve function which can retrieve one object's info
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # This is original code of the RetrieveModelMixin
+        # serializer = self.get_serializer(instance)
+
+        # Change the Book Mini Serializer to Book Serializer
+        # Users can check the mini serializer and go into the detail page with book serializer
+        serializer = BookSerializer(instance)
+        return Response(serializer.data)
 
 
 class BookList(generics.ListCreateAPIView):
@@ -175,3 +190,14 @@ class AlbumViewSet(viewsets.ModelViewSet):
 class TrackViewSet(viewsets.ModelViewSet):
     serializer_class = TrackSerializer
     queryset = Track.objects.all()
+
+
+# class BookMiniViewSet(viewsets.ModelViewSet):
+#     serializer_class = BookMiniSerializer
+#     queryset = Book.objects.all()
+#
+#     def retrieve(self, request, *args, **kwargs):
+#         instance = self.get_object()
+#         serializer = BookSerializer(instance)
+#         return Response(serializer.data)
+

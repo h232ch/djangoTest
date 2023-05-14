@@ -1,14 +1,26 @@
 
 
 from rest_framework import serializers
-from demo.models import Book, Album, Track, BookNumber, Character
+from demo.models import Book, Album, Track, BookNumber, Character, Author
 from demo.models import Comment
+
+
+class BookMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['id', 'title']
 
 
 class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character
         fields = ['id', 'name']
+
+
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        fields = ['id', 'name', 'surname']
 
 
 class BookNumberSerializer(serializers.ModelSerializer):
@@ -18,16 +30,20 @@ class BookNumberSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    # OneToOne Mapping needs to set many=False
+    # OneToOne relationship needs to set many=False
     number = BookNumberSerializer(many=False)
 
-    # Foreign Key Relationship with ManyToMany
+    # Foreign Key Relationship
     characters = CharacterSerializer(many=True)
+
+    # ManyToMany relationship needs to set many=True
+    authors = AuthorSerializer(many=True)
 
     class Meta:
         model = Book
         fields = ['id', 'title', 'description',
-                  'price', 'published', 'number', 'characters']
+                  'price', 'published', 'number', 'characters',
+                  'authors']
         # read_only_fields = ['price']
 
 

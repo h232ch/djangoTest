@@ -36,6 +36,15 @@ class Character(models.Model):
         return self.name
 
 
+class Author(models.Model):
+    name = models.CharField(max_length=30)
+    surname = models.CharField(max_length=30)
+    books = models.ManyToManyField(Book, related_name='authors')
+
+    def __str__(self):
+        return self.name
+
+
 class Comment:
     def __init__(self, email, content, created=None):
         self.email = email

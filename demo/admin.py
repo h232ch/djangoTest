@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from demo.models import Book, Album, Track, BookNumber, Character
+from demo.models import Book, Album, Track, BookNumber, Character, Author
 
 # Register your models here.
 # admin.site.register(Book)
@@ -9,6 +9,7 @@ admin.site.register(Album)
 admin.site.register(Track)
 admin.site.register(BookNumber)
 admin.site.register(Character)
+admin.site.register(Author)
 
 
 @admin.register(Book)

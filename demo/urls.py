@@ -5,7 +5,10 @@ from .views import BookViewSet, AlbumViewSet, TrackViewSet, ClassBasedViewBooks
 
 # viewset
 router = routers.DefaultRouter()
+# router.register('booksmini', BookMiniViewSet)
+# router.register('books', BookViewSet)
 router.register('books', BookViewSet)
+
 # router.register('albums', AlbumViewSet)
 # router.register('track', TrackViewSet)
 
