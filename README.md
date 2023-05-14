@@ -4,8 +4,7 @@
 References of DRF
 
 ## Install
-1. pip install django
-2. pip install djangorestframework
+pip install -r requirements.txt
 
 ## run
 python manage.py runserver
