@@ -3,7 +3,9 @@ import json
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.views import View
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -133,28 +135,31 @@ def first(request):
     return render(request, 'first_temp.html', {'books': books})
 
 
-class Another(View):
-    # books = Book.objects.all()
-    books = Book.objects.filter(is_published=True)
-    output = ''
-    for book in books:
-        output += f"We have {book.title} book with ID" \
-                  f" {book.id} <br>"
-
-    # output = f"We have {len(books)} that many books in DB"
-
-    # Selecting one object
-    book = Book.objects.get(id=5)
-
-    def get(self, request):
-        # return HttpResponse('This is another function inside class')
-        return HttpResponse(self.output)
+# class Another(View):
+#     # books = Book.objects.all()
+#     books = Book.objects.filter(is_published=True)
+#     output = ''
+#     for book in books:
+#         output += f"We have {book.title} book with ID" \
+#                   f" {book.id} <br>"
+#
+#     # output = f"We have {len(books)} that many books in DB"
+#
+#     # Selecting one object
+#     book = Book.objects.get(id=5)
+#
+#     def get(self, request):
+#         # return HttpResponse('This is another function inside class')
+#         return HttpResponse(self.output)
 
 
 # we need to study ViewSet more
 class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    # settings.py에 먼저 정의하더라도 아래 권한이 먼저 적용됨
+    # permission_classes = (IsAuthenticated,)
 
 
 class BookList(generics.ListCreateAPIView):
