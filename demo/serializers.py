@@ -5,10 +5,16 @@ from demo.models import Book, Album, Track, BookNumber, Character, Author
 from demo.models import Comment
 
 
-class BookMiniSerializer(serializers.ModelSerializer):
+# class BookMiniSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Book
+#         fields = ['id', 'title']
+
+
+class BookMiniSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
-        fields = ['id', 'title']
+        fields = ['id', 'title', 'url']
 
 
 class CharacterSerializer(serializers.ModelSerializer):

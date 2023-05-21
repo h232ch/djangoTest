@@ -23,7 +23,6 @@ class Book(models.Model):
     number = models.OneToOneField(BookNumber, null=True, blank=True,
                                   on_delete=models.CASCADE)
 
-    # it would express title on admin site
     def __str__(self):
         return self.title
 
@@ -50,6 +49,13 @@ class Comment:
         self.email = email
         self.content = content
         self.created = created or datetime.now()
+
+
+
+
+'''
+    Alum relationship
+'''
 
 
 class Album(models.Model):
